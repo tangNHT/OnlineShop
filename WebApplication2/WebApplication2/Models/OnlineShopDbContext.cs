@@ -35,13 +35,9 @@ public partial class OnlineShopDbContext : DbContext
         {
             entity.ToTable("Category");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
-            entity.Property(e => e.Alias)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Alias).HasMaxLength(50);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.ParentId).HasColumnName("ParentID");
         });

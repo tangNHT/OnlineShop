@@ -29,14 +29,24 @@ namespace WebApplication2.Controllers
 		// POST: CategoryController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create(Category collection)
+		public async Task<ActionResult> Create(Category collection)
 		{
 			try
 			{
+				//Xử lý dữ liệu hợp lệ
 				if (ModelState.IsValid)
 				{
+					var model = new CategoryModel();
+					int res = await model.Create(collection.Name, collection.Alias, collection.ParentId, collection.Order, collection.Status);
+					if(res > 0)
+					//Chuyển đến Action khác
 					return RedirectToAction(nameof(Index));
+					else
+					{
+						ModelState.AddModelError("", "Thêm mới không thành công");
+					}
 				}
+				//Trả lại trang với dữ liệu đã nhập và thông báo lỗi
 				return View(collection);
 			}
 			catch
