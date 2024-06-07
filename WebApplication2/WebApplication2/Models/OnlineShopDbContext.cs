@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using WebApplication2.Models;
 
 namespace WebApplication2.Models;
 
@@ -23,12 +24,16 @@ public partial class OnlineShopDbContext : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.UserName);
-
             entity.ToTable("Account");
 
-            entity.Property(e => e.UserName).HasMaxLength(50);
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Admin)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.FirstName).HasMaxLength(20);
+            entity.Property(e => e.LastName).HasMaxLength(20);
             entity.Property(e => e.Password).HasMaxLength(50);
+            entity.Property(e => e.UserName).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Category>(entity =>
@@ -64,4 +69,6 @@ public partial class OnlineShopDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+public DbSet<WebApplication2.Models.RegisterModel> RegisterModel { get; set; } = default!;
 }

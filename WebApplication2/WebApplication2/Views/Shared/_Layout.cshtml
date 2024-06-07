@@ -124,10 +124,16 @@
 
 			<!-- Nav Item - Tables -->
 			<li class="nav-item">
-				<a class="nav-link" href="@Url.Action("Index", "Category")">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTables" aria-expanded="true" aria-controls="collapseTables">
 					<i class="fas fa-fw fa-table"></i>
 					<span>Tables</span>
 				</a>
+				<div id="collapseTables" class="collapse" aria-labelledby="headingTables" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Tables</h6>
+						<a class="collapse-item" href="@Url.Action("Index", "Category")">Category</a>
+					</div>
+				</div>
 			</li>
 
 			<!-- Divider -->
@@ -184,7 +190,7 @@
 				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="@Url.Action("Index", "Login")">Logout</a>
+					<a class="btn btn-primary" href="@Url.Action("Logout", "Login")">Logout</a>
 				</div>
 			</div>
 		</div>

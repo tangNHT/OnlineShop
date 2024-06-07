@@ -9403,11 +9403,13 @@ a.text-warning:hover, a.text-warning:focus {
 }
 
 .text-danger {
-  color: #e74a3b !important;
+    color: #e74a3b !important;
+    list-style: none;
 }
 
 a.text-danger:hover, a.text-danger:focus {
-  color: #be2617 !important;
+    color: #be2617 !important;
+    list-style: none;
 }
 
 .text-light {

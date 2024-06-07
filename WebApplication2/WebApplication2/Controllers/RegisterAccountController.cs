@@ -1,52 +1,52 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
-	public class CategoryController : BaseController
+	public class RegisterAccountController : BaseController
 	{
-		// GET: CategoryController
+		// GET: RegisterController
 		public ActionResult Index()
 		{
-			var iplCategory = new CategoryModel();
-			var model = iplCategory.ListAll();
-			return View(model);
+			return View();
 		}
 
-		// GET: CategoryController/Details/5
+		// GET: RegisterController/Details/5
 		public ActionResult Details(int id)
 		{
 			return View();
 		}
 
-		// GET: CategoryController/Create
+		// GET: RegisterController/Create
 		public ActionResult Create()
 		{
 			return View();
 		}
 
-		// POST: CategoryController/Create
+		// POST: RegisterController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Create(Category collection)
+		public ActionResult Create(RegisterModel collection)
 		{
 			try
 			{
-				//Xử lý dữ liệu hợp lệ
-				if (ModelState.IsValid)
+				if(ModelState.IsValid)
 				{
-					var model = new CategoryModel();
-					int res = await model.Create(collection.Name, collection.Alias, collection.ParentId, collection.Order, collection.Status);
-					if(res > 0)
-					//Chuyển đến Action khác
-					return RedirectToAction(nameof(Index));
+					var model = new AccountModel();
+					var result = model.Register(collection.UserName, collection.Password, collection.FirstName, collection.LastName);
+					if (result)
+					{
+						//Lưu thông báo vào TempData
+						TempData["SuccessMessage"] = "Thêm mới tài khoản thành công";
+						return RedirectToAction("Index", "Login");
+					}
 					else
 					{
-						ModelState.AddModelError("Create Category False", "Thêm mới không thành công");
+						ModelState.AddModelError("Register False", "Tài khoản đã tồn tại");
 					}
 				}
-				//Trả lại trang với dữ liệu đã nhập và thông báo lỗi
 				return View(collection);
 			}
 			catch
@@ -55,13 +55,13 @@ namespace WebApplication2.Controllers
 			}
 		}
 
-		// GET: CategoryController/Edit/5
+		// GET: RegisterController/Edit/5
 		public ActionResult Edit(int id)
 		{
 			return View();
 		}
 
-		// POST: CategoryController/Edit/5
+		// POST: RegisterController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Edit(int id, IFormCollection collection)
@@ -76,13 +76,13 @@ namespace WebApplication2.Controllers
 			}
 		}
 
-		// GET: CategoryController/Delete/5
+		// GET: RegisterController/Delete/5
 		public ActionResult Delete(int id)
 		{
 			return View();
 		}
 
-		// POST: CategoryController/Delete/5
+		// POST: RegisterController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Delete(int id, IFormCollection collection)

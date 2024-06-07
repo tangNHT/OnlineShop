@@ -2,20 +2,19 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
+using System.ComponentModel;
 
 namespace WebApplication2.Models;
 
 public partial class Category
 {
-    public int Id { get; set; }
+	public int Id { get; set; }
 	//Giới hạn độ dài của chuỗi
 	[StringLength(50, ErrorMessage = "Bạn hãy nhập tên không quá 50 ký tự")]
-    [DisplayName("Tên danh mục")]
-    [Required(ErrorMessage = "Bạn hãy nhập tên danh mục")]
-    public string Name { get; set; }
+	[DisplayName("Tên danh mục")]
+	[Required(ErrorMessage = "Bạn hãy nhập tên danh mục")]
+	public string Name { get; set; }
 	[DisplayName("Tiêu đề SEO")]
 	public string Alias { get; set; }
 	[DisplayName("Danh mục cha")]

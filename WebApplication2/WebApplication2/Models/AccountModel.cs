@@ -34,6 +34,37 @@ namespace WebApplication2.Models
 			}
 			return false;
         }
+		public bool Register(string userName, string password, string fisrtName, string lastName)
+		{
+			try
+			{
+				//Kiểm tra tài khoản đã tồn tại hay chưa
+				var account = context.Accounts.FirstOrDefault(a => a.UserName == userName);
+				if (account == null)
+				{
+					//Tạo tài khoản mới
+					var newAcount = new Account()
+					{
+						UserName = userName,
+						Password = HashPassword(password),
+						FirstName = fisrtName,
+						LastName = lastName
+					};
+					//Thêm mới tài khoản vào db
+					context.Accounts.Add(newAcount);
+					//Lưu thay đổi
+					context.SaveChanges();
+					return true;
+				}
+				else
+					return false;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
+			return false;
+		}
 		private string HashPassword(string password)
 		{
 			//Sử dụng phương thức băm mật khẩu phù hợp với ứng dụng của bạn

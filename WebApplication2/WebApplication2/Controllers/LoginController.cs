@@ -1,34 +1,44 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication2.Common;
 using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
     public class LoginController : Controller
-    {
-        [HttpGet]
+	{
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]//
         public IActionResult Index(LoginModel model)
         {
-            var result = new AccountModel().Login(model.UserName, model.Password);
-            if(result && ModelState.IsValid)
+            try
             {
-                HttpContext.Session.SetString("loginSession", model.UserName);
-                return RedirectToAction("Index", "Admin");
-            }
-            else
+				if (ModelState.IsValid)
+				{
+					var result = new AccountModel().Login(model.UserName, model.Password);
+					if (result)
+					{
+						HttpContext.Session.SetString(CommonConstants.USER_SESSION, model.UserName);
+						return RedirectToAction("Index", "Admin");
+					}
+					else
+					{
+						ModelState.AddModelError("LoginError", "Tên đăng nhập hoặc mật khẩu không đúng");
+					}
+				}
+				return View(model);
+			}
+            catch
             {
-                ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng");
+                return View();
             }
-            return View(model);
-        }
+		}
         public ActionResult Logout()
         {
 			////Đăng xuất người dùng
