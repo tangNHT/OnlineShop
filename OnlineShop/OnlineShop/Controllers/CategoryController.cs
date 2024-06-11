@@ -7,13 +7,16 @@ namespace WebApplication2.Controllers
 	public class CategoryController : BaseController
 	{
 		// GET: CategoryController
-		public ActionResult Index(int pageNumber = 1, int pageSize = 10)
+		public ActionResult Index(string searchString, int pageNumber = 1, int pageSize = 10)
 		{
 			//Tạo Model
 			var iplCategory = new CategoryModel();
-			var categories = iplCategory.ListAll(pageNumber, pageSize);
+
 			var totalPages = iplCategory.TotalPages(pageSize);
 			var totalItems = iplCategory.TotalItems();
+			var categories = string.IsNullOrEmpty(searchString)
+							? iplCategory.ListAll(pageNumber, pageSize)
+							: iplCategory.ListAll(searchString, pageNumber, pageSize);
 
 			var model = new PaginationModel<Category>
 			{
@@ -49,7 +52,7 @@ namespace WebApplication2.Controllers
 				{
 					var model = new CategoryModel();
 					int res = await model.Create(collection.Name, collection.Alias, collection.ParentId, collection.Order, collection.Status);
-					if(res > 0)
+					if (res > 0)
 					{
 						TempData["SuccessMessage"] = "Thêm mới danh mục thành công";
 						//Chuyển đến Action khác
@@ -98,7 +101,7 @@ namespace WebApplication2.Controllers
 					else
 					{
 						TempData["ErrorMessage"] = "Cập nhật không thành công";
-						ModelState.AddModelError("Create Category False", "Cập nhật không thành công");
+						ModelState.AddModelError("Edit Category False", "Cập nhật không thành công");
 					}
 				}
 				//Trả lại trang với dữ liệu đã nhập và thông báo lỗi
@@ -110,20 +113,26 @@ namespace WebApplication2.Controllers
 			}
 		}
 
-		// GET: CategoryController/Delete/5
-		public ActionResult Delete(int id)
-		{
-			return View();
-		}
-
 		// POST: CategoryController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
+		public ActionResult Delete(int id)
 		{
 			try
 			{
-				return RedirectToAction(nameof(Index));
+				var model = new CategoryModel();
+				var result = model.Delete(id);
+				if (result)
+				{
+					TempData["SuccessMessage"] = "Xoá danh mục thành công";
+					TempData["RedirectUrl"] = Url.Action("Index", "Category");
+				}
+				else
+				{
+					TempData["ErrorMessage"] = "Xoá danh mục thành công";
+					ModelState.AddModelError("Delete Category False", "Xoá không thành công");
+				}
+				return RedirectToAction("Index");
 			}
 			catch
 			{

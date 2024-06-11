@@ -16,11 +16,14 @@ namespace WebApplication2.Models
 		public IEnumerable<Category> ListAll(int pageNumber, int pageSize)
 		{
 			//Danh sách sắp xếp theo ID, bỏ qua số bản ghi dựa trên số trang và hiển thị số bản ghi
-			var categories = context.Categories.OrderByDescending(c => c.Id).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
-			foreach (var category in typeof(Category).GetProperties()) { 
-			}
-			return categories;
+			return context.Categories.OrderByDescending(c => c.Id).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+		}
+		public IEnumerable<Category> ListAll(string searchString, int pageNumber, int pageSize)
+		{
+			//Danh sách sắp xếp theo ID, bỏ qua số bản ghi dựa trên số trang, search và hiển thị số bản ghi
+
+			return context.Categories.OrderByDescending(c => c.Id).Where(c => c.Name.Contains(searchString)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 		}
 		public int TotalPages( int pageSize)
 		{
@@ -36,13 +39,39 @@ namespace WebApplication2.Models
 		{
 			try
 			{
-				var user = context.Categories.Find(category.Id);
-				user.Name = category.Name;
-				user.Alias = category.Alias;
-				user.ParentId = category.ParentId;
-				user.CreateDate = DateTime.Now;
-				user.Order = category.Order;
-				user.Status = category.Status;
+				//Tìm Category
+				var findCategory = context.Categories.Find(category.Id);
+				//Duyêt qua tất cả các thuộc tính của đối tượng Category
+				foreach (var prop in typeof(Category).GetProperties())
+				{
+					//Lấy giá trị của thuộc tính từ đối tượng thay đổi
+					var value = prop.GetValue(category);
+					//Gán giá trị của thuộc tính cho đối tượng được thay đổi
+					prop.SetValue(findCategory, value);
+					if (prop.Name == "CreateDate")
+					{
+						findCategory.CreateDate = DateTime.Now;
+					}
+				}
+				//Lưu thay đổi
+				context.SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+				return false;
+			}
+		}
+		public bool Delete(int id)
+		{
+			try
+			{
+				//Tìm Category
+				var findCategory = context.Categories.Find(id);
+				//Xoá danh mục sau khi tìm thấy
+				context.Categories.Remove(findCategory);
+				//Lưu thay đổi
 				context.SaveChanges();
 				return true;
 			}
