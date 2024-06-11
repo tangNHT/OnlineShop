@@ -24,12 +24,14 @@ namespace WebApplication2.Controllers
 					var result = new AccountModel().Login(model.UserName, model.Password);
 					if (result)
 					{
+						TempData["SuccessMessage"] = "Đăng nhập thành công";
 						HttpContext.Session.SetString(CommonConstants.USER_SESSION, model.UserName);
-						return RedirectToAction("Index", "Admin");
+						TempData["RedirectUrl"] = Url.Action("Index", "Admin");
 					}
 					else
 					{
-						ModelState.AddModelError("LoginError", "Tên đăng nhập hoặc mật khẩu không đúng");
+						TempData["ErrorMessage"] = "Tài khoản hoặc mật khẩu không chính xác";
+						ModelState.AddModelError("LoginError", "Tài khoản hoặc mật khẩu không chính xác");
 					}
 				}
 				return View(model);
@@ -38,7 +40,7 @@ namespace WebApplication2.Controllers
             {
                 return View();
             }
-		}
+			}
         public ActionResult Logout()
         {
 			////Đăng xuất người dùng

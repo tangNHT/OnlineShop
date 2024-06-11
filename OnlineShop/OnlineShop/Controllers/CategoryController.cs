@@ -53,7 +53,7 @@ namespace WebApplication2.Controllers
 					{
 						TempData["SuccessMessage"] = "Thêm mới danh mục thành công";
 						//Chuyển đến Action khác
-						return RedirectToAction(nameof(Index));
+						TempData["RedirectUrl"] = Url.Action("Index", "Category");
 					}
 					else
 					{
@@ -93,7 +93,7 @@ namespace WebApplication2.Controllers
 					{
 						TempData["SuccessMessage"] = "Cập nhật danh mục thành công";
 						//Chuyển đến Action khác
-						return RedirectToAction(nameof(Index));
+						TempData["RedirectUrl"] = Url.Action("Index", "Category");
 					}
 					else
 					{

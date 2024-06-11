@@ -38,12 +38,14 @@ namespace WebApplication2.Controllers
 					var result = model.Register(collection.UserName, collection.Password, collection.FirstName, collection.LastName);
 					if (result)
 					{
-						//Lưu thông báo vào TempData
+						//Lưu thông báo thành công vào TempData
 						TempData["SuccessMessage"] = "Thêm mới tài khoản thành công";
-						return RedirectToAction("Index", "RegisterAccount");
+						//Lưu đường dẫn chuyển màn vào TempData
+						TempData["RedirectUrl"] = Url.Action("Index", "Login");
 					}
 					else
 					{
+						//Lưu thông báo không thành công vào TempData
 						TempData["ErrorMessage"] = "Tài khoản đã tồn tại";
 						ModelState.AddModelError("Register False", "Tài khoản đã tồn tại");
 					}

@@ -21,7 +21,9 @@
 </head>
 
 <body id="page-top">
-	
+	<input type="hidden" id="success-message" value="@TempData["SuccessMessage"]" />
+	<input type="hidden" id="error-message" value="@TempData["ErrorMessage"]" />
+	<input type="hidden" id="redirect-url" value="@TempData["RedirectUrl"]"
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
@@ -196,45 +198,19 @@
 			</div>
 		</div>
 	</div>
-	@section Scripts {
-		<script>
-			$(document).ready(function () {
-				var successMessage = '@TempData["SuccessMessage"]';
-				var errorMessage = '@TempData["ErrorMessage"]';
-				if (successMessage) {
-					Swal.fire({
-						icon: 'success',
-						title: 'Thành công',
-						text: successMessage,
-						timer: 3000, // Thời gian hiển thị popup (ms)
-						showConfirmButton: false,
-					});
-				}
-				if (errorMessage) {
-					Swal.fire({
-						icon: 'error',
-						title: 'Không thành công',
-						text: errorMessage,
-						timer: 3000, // Thời gian hiển thị popup (ms)
-						showConfirmButton: false,
-					});
-				}
-			});
-		</script>
-	}
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<!-- Bootstrap core JavaScript-->
-	<script src="/Admin/vendor/jquery/jquery.min.js"></script>
-	<script src="/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="/Admin/vendor/jquery/jquery.js"></script>
+	<script src="/Admin/vendor/bootstrap/js/bootstrap.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="/Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="/Admin/vendor/jquery-easing/jquery.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="/Admin/js/sb-admin-2.min.js"></script>
+	<script src="/Admin/js/sb-admin-2.js"></script>
 
 	<!-- Page level plugins -->
-	<script src="/Admin/vendor/chart.js/Chart.min.js"></script>
+	<script src="/Admin/vendor/chart.js/Chart.js"></script>
 
 	<!-- Page level custom scripts -->
 	<script src="/Admin/js/demo/chart-area-demo.js"></script>
