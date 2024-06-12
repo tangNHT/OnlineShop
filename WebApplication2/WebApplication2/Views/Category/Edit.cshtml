@@ -1,0 +1,74 @@
+﻿@model WebApplication2.Models.Category
+
+@{
+	ViewData["Title"] = "Edit";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Edit</title>
+</head>
+<body>
+	
+	<h1>Edit</h1>
+	<h4>Category</h4>
+	<hr />
+	<div class="row">
+		<div class="col-md-4">
+			<form asp-action="Edit">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<input type="hidden" asp-for="Id" />
+				<div class="form-group">
+					<label asp-for="Name" class="control-label"></label>
+					<input asp-for="Name" class="form-control" />
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Alias" class="control-label"></label>
+					<input asp-for="Alias" class="form-control" />
+					<span asp-validation-for="Alias" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="ParentId" class="control-label"></label>
+					<input asp-for="ParentId" class="form-control" />
+					<span asp-validation-for="ParentId" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Order" class="control-label"></label>
+					<input asp-for="Order" class="form-control" />
+					<span asp-validation-for="Order" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Status" class="control-label"></label>
+					<select asp-for="Status" class="form-contol" asp-times="Html.GetEnumSelectList<WebApplication2.StatusEnum>()">
+						<option value="true">Active</option>
+						<option value="false">Blocked</option>
+					</select>
+					<span asp-validation-for="Status" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Strong" class="control-label"></label>
+					<select asp-for="Strong" class="form-contol" asp-times="Html.GetEnumSelectList<WebApplication2.StatusEnum>()">
+						<option value="1">Normal</option>		@* Nếu là Normal sẽ có giá trị 1 *@
+						<option value="2">High</option>			@* Nếu là High sẽ có giá trị 2 *@
+						<option value="3">Very High</option>	@* Nếu là Very High sẽ có giá trị 3 *@
+					</select>
+					<span asp-validation-for="Status" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Save" class="btn btn-primary" />
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div>
+		<a asp-action="Index">Back to List</a>
+	</div>
+
+</body>
+</html>
