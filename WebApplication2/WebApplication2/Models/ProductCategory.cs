@@ -5,25 +5,19 @@ using System.Collections.Generic;
 
 namespace WebApplication2.Models;
 
-public partial class Product
+public partial class ProductCategory
 {
     public int Id { get; set; }
 
     public string Name { get; set; }
 
-    public string Code { get; set; }
+    public string MetaTitle { get; set; }
 
-    public string Description { get; set; }
+    public int? ParentId { get; set; }
 
-    public string Images { get; set; }
+    public int? DisplayOrder { get; set; }
 
-    public string MoreImages { get; set; }
-
-    public int? Price { get; set; }
-
-    public int? PromotionPrice { get; set; }
-
-    public string Warranty { get; set; }
+    public string SeoTitle { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 
@@ -35,11 +29,9 @@ public partial class Product
 
     public string MetaKeywords { get; set; }
 
-    public string MetaDescription { get; set; }
+    public string MetaDescriptions { get; set; }
 
-    public bool? Status { get; set; }
+    public bool Status { get; set; }
 
-    public string TopHot { get; set; }
-
-    public int? ViewCount { get; set; }
+    public string ShowOnHome { get; set; }
 }

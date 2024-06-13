@@ -15,7 +15,6 @@ builder.Services.AddSession(options =>
 	options.IdleTimeout = TimeSpan.FromMinutes(10); //Thời gian timeout của session
 	options.Cookie.HttpOnly = true; //Chỉ có thể truy cập sesstion thông qua http
 	options.Cookie.IsEssential = true;  // Đảm bảo cookie của session luôn được gửi
-
 });
 
 // Thêm dịch vụ MVC

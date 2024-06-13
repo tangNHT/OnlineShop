@@ -23,7 +23,27 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Footer]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Menu]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MenuType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Product]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Silde]",
          "ObjectType": 0
       }
    ],

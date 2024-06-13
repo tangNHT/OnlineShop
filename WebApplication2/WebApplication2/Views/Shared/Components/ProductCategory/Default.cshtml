@@ -1,0 +1,9 @@
+﻿@model List<WebApplication2.Models.ProductCategory>
+
+<ul>
+	<h3>Dạnh mục sản phẩm</h3>
+	@foreach (var item in Model)
+	{
+		<li><a href="/san-pham/@item.MetaTitle-@item.Id">@item.Name</a></li>
+	}
+</ul>

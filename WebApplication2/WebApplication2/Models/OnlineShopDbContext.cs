@@ -17,7 +17,17 @@ public partial class OnlineShopDbContext : DbContext
 
     public virtual DbSet<Category> Categories { get; set; }
 
+    public virtual DbSet<Footer> Footers { get; set; }
+
+    public virtual DbSet<Menu> Menus { get; set; }
+
+    public virtual DbSet<MenuType> MenuTypes { get; set; }
+
     public virtual DbSet<Product> Products { get; set; }
+
+    public virtual DbSet<ProductCategory> ProductCategories { get; set; }
+
+    public virtual DbSet<Silde> Sildes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -46,22 +56,124 @@ public partial class OnlineShopDbContext : DbContext
             entity.Property(e => e.ParentId).HasColumnName("ParentID");
         });
 
+        modelBuilder.Entity<Footer>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("Footer");
+
+            entity.Property(e => e.Content).HasColumnType("ntext");
+            entity.Property(e => e.Id)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("ID");
+        });
+
+        modelBuilder.Entity<Menu>(entity =>
+        {
+            entity.ToTable("Menu");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Link).HasMaxLength(250);
+            entity.Property(e => e.Target).HasMaxLength(50);
+            entity.Property(e => e.Text).HasMaxLength(50);
+            entity.Property(e => e.TypeId).HasColumnName("TypeID");
+
+            entity.HasOne(d => d.Type).WithMany(p => p.Menus)
+                .HasForeignKey(d => d.TypeId)
+                .HasConstraintName("FK_Menu_MenuType1");
+        });
+
+        modelBuilder.Entity<MenuType>(entity =>
+        {
+            entity.ToTable("MenuType");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Product>(entity =>
         {
             entity.ToTable("Product");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
-            entity.Property(e => e.Alias)
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Code)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
+            entity.Property(e => e.CreatedBy).HasMaxLength(50);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.Detail).HasColumnType("ntext");
-            entity.Property(e => e.Images).HasMaxLength(250);
+            entity.Property(e => e.Description)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Images).HasMaxLength(50);
+            entity.Property(e => e.MetaDescription)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("Meta Description");
+            entity.Property(e => e.MetaKeywords)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("Meta Keywords");
+            entity.Property(e => e.ModifiedBy).HasMaxLength(50);
+            entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            entity.Property(e => e.MoreImages)
+                .HasMaxLength(50)
+                .HasColumnName("More Images");
             entity.Property(e => e.Name).HasMaxLength(50);
-            entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.PromotionPrice).HasColumnName("Promotion Price");
+            entity.Property(e => e.TopHot)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Warranty).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<ProductCategory>(entity =>
+        {
+            entity.ToTable("ProductCategory");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CreatedBy).HasMaxLength(50);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.MetaDescriptions)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.MetaKeywords)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.MetaTitle)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("Meta Title");
+            entity.Property(e => e.ModifiedBy).HasMaxLength(50);
+            entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            entity.Property(e => e.Name).HasMaxLength(50);
+            entity.Property(e => e.ParentId).HasColumnName("ParentID");
+            entity.Property(e => e.SeoTitle)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("Seo Title");
+            entity.Property(e => e.ShowOnHome)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Silde>(entity =>
+        {
+            entity.ToTable("Silde");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CreatedBy).HasMaxLength(50);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Description)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Image).HasMaxLength(50);
+            entity.Property(e => e.Link)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.ModifiedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         OnModelCreatingPartial(modelBuilder);
