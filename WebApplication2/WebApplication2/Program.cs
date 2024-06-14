@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using WebApplication2.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,15 @@ app.UseRouting();
 app.UseSession();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+	name: "Product Category",
+	pattern: "san-pham/{metatitle}-{cateId}",
+	defaults: new { controller = "Product", action = "ProductCategory" });
+app.MapControllerRoute(
+	name: "Product Detail",
+	pattern: "chi-tiet/{metatitle}-{id}",
+	defaults: new { controller = "Product", action = "Detail" });
 
 app.MapControllerRoute(
 	name: "default",

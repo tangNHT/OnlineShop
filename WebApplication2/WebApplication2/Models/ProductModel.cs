@@ -19,7 +19,16 @@ namespace WebApplication2.Models
 		}
 		public List<Product> ListFeatureProduct(int top)
 		{
-			return (from p in context.Products where p.TopHot != null  orderby p.CreatedDate descending select p).Take(top).ToList();
+			return (from p in context.Products where p.TopHot != null && p.TopHot > DateTime.Now orderby p.CreatedDate descending select p).Take(top).ToList();
+		}
+		public List<Product> ListRelateProduct(int productId)
+		{
+			var product = context.Products.Find(productId);
+			return (from p in context.Products where p.Id != productId && p.CategoryId == product.CategoryId select p).ToList();
+		}
+		public Product ViewDetail(int id)
+		{
+			return context.Products.Find(id);
 		}
 	}
 }

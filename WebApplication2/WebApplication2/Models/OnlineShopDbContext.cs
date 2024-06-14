@@ -97,34 +97,32 @@ public partial class OnlineShopDbContext : DbContext
             entity.ToTable("Product");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.Code)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedBy).HasMaxLength(50);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Description)
-                .HasMaxLength(50)
+                .HasMaxLength(500)
                 .IsUnicode(false);
-            entity.Property(e => e.Images).HasMaxLength(50);
+            entity.Property(e => e.Detail).HasColumnType("ntext");
+            entity.Property(e => e.Images).HasMaxLength(250);
+            entity.Property(e => e.IncludedVat).HasColumnName("IncludedVAT");
             entity.Property(e => e.MetaDescription)
                 .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("Meta Description");
+                .IsUnicode(false);
             entity.Property(e => e.MetaKeywords)
                 .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("Meta Keywords");
+                .IsUnicode(false);
+            entity.Property(e => e.MetaTitle)
+                .HasMaxLength(250)
+                .IsUnicode(false);
             entity.Property(e => e.ModifiedBy).HasMaxLength(50);
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            entity.Property(e => e.MoreImages)
-                .HasMaxLength(50)
-                .HasColumnName("More Images");
+            entity.Property(e => e.MoreImages).HasColumnType("xml");
             entity.Property(e => e.Name).HasMaxLength(50);
-            entity.Property(e => e.PromotionPrice).HasColumnName("Promotion Price");
-            entity.Property(e => e.TopHot)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Warranty).HasMaxLength(50);
+            entity.Property(e => e.TopHot).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<ProductCategory>(entity =>
@@ -142,16 +140,14 @@ public partial class OnlineShopDbContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.MetaTitle)
                 .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("Meta Title");
+                .IsUnicode(false);
             entity.Property(e => e.ModifiedBy).HasMaxLength(50);
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.ParentId).HasColumnName("ParentID");
             entity.Property(e => e.SeoTitle)
                 .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("Seo Title");
+                .IsUnicode(false);
             entity.Property(e => e.ShowOnHome)
                 .HasMaxLength(50)
                 .IsUnicode(false);

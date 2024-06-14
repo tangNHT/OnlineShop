@@ -17,5 +17,9 @@ namespace WebApplication2.Models
 		{
 			return (from n in context.ProductCategories where n.Status == true orderby n.DisplayOrder select n).ToList();
 		}
-	}
+		public ProductCategory ViewDetail (int id)
+		{
+			return context.ProductCategories.Find(id);
+		}
+    }
 }

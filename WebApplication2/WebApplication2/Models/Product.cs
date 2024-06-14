@@ -13,6 +13,8 @@ public partial class Product
 
     public string Code { get; set; }
 
+    public string MetaTitle { get; set; }
+
     public string Description { get; set; }
 
     public string Images { get; set; }
@@ -23,7 +25,15 @@ public partial class Product
 
     public int? PromotionPrice { get; set; }
 
-    public string Warranty { get; set; }
+    public bool? IncludedVat { get; set; }
+
+    public int? Quantity { get; set; }
+
+    public int? CategoryId { get; set; }
+
+    public string Detail { get; set; }
+
+    public int? Warranty { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 
@@ -39,7 +49,7 @@ public partial class Product
 
     public bool? Status { get; set; }
 
-    public string TopHot { get; set; }
+    public DateTime? TopHot { get; set; }
 
     public int? ViewCount { get; set; }
 }
