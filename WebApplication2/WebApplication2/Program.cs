@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<OnlineShopDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Đăng ký cấu hình EmailSettings từ appsettings.jso
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
 //Cấu hình dịch vụ session
 builder.Services.AddDistributedMemoryCache();
 
@@ -58,6 +61,7 @@ app.MapControllerRoute(
 	name: "Cart",
 	pattern: "gio-hang",
 	defaults: new { controller = "Cart", action = "Index" });
+
 app.MapControllerRoute(
 	name: "Payment",
 	pattern: "thanh-toan",

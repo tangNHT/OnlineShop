@@ -2,12 +2,25 @@
 using Newtonsoft.Json;
 using WebApplication2.Models;
 using WebApplication2.Common;
-
+using Microsoft.Extensions.Options;
+using MailKit.Net.Smtp;
+using MimeKit;
 namespace WebApplication2.Controllers
 {
 	public class CartController : Controller
 	{
-		List<CartItem>? sessionCart = new List<CartItem>();
+        private readonly EmailSettings _emailSettings;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IConfiguration _configuration;
+
+        public CartController(IOptions<EmailSettings> emailSettings, IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
+        {
+            _emailSettings = emailSettings.Value;
+            _hostingEnvironment = hostingEnvironment;
+            _configuration = configuration;
+        }
+
+        List<CartItem>? sessionCart = new List<CartItem>();
 
         public IActionResult Index()
 		{
@@ -122,7 +135,7 @@ namespace WebApplication2.Controllers
             return sessionCart;
         }
 
-        private static List<CartItem>? GetJsonString(string jsonString)
+        private List<CartItem>? GetJsonString(string jsonString)
         {
             return JsonConvert.DeserializeObject<List<CartItem>>(jsonString);
         }
@@ -148,6 +161,7 @@ namespace WebApplication2.Controllers
                 var id = new OrderModel().Insert(order);
                 sessionCart = GetSessionCart();
                 var detail = new OrderDetailModel();
+                decimal total = 0;
                 foreach (var item in sessionCart)
                 {
                     var orderDetail = new OrderDetail();
@@ -156,6 +170,7 @@ namespace WebApplication2.Controllers
                     orderDetail.Price = item.Product.Price;
                     orderDetail.Quantity = item.Quantity;
                     var result = detail.Insert(orderDetail);
+                    total += (item.Product.Price.GetValueOrDefault(0) * item.Quantity);
                     if (result)
                     {
                         TempData["SuccessMessage"] = "Mua hàng thành công";
@@ -164,9 +179,13 @@ namespace WebApplication2.Controllers
                     }
                     else
                     {
-
                         TempData["ErrorMessage"] = "Mua hàng không thành công";
                     }
+
+                    var toEmail = _emailSettings.ToEmailAddress;
+
+                    SendMail(email, "Đơn hàng mới từ OnlineShop");
+                    SendMail(toEmail, "Đơn hàng mới từ OnlineShop");
                 }
             }
             catch
@@ -174,6 +193,38 @@ namespace WebApplication2.Controllers
                 throw;
             }
             return View(sessionCart);
+        }
+
+        public async void SendMail(string toEmailAddress, string subject)
+        {
+            var emailSettings = _configuration.GetSection("EmailSettings").Get<EmailSettings>();
+
+            // Đường dẫn tới tệp HTML
+            string filePath = Path.Combine(_hostingEnvironment.WebRootPath, "Client", "template", "neworder.html");
+
+            // Đọc nội dung của tệp HTML
+            string emailBody;
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                emailBody = await reader.ReadToEndAsync();
+            }
+
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(emailSettings.FromEmailDisplayName, emailSettings.FromEmailAddress));
+            emailMessage.To.Add(new MailboxAddress("", toEmailAddress));
+            emailMessage.Subject = subject;
+            emailMessage.Body = new TextPart("html") { Text = emailBody };
+
+            using (var client = new SmtpClient())
+            {
+                // Bỏ qua kiểm tra chứng chỉ
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                await client.ConnectAsync(emailSettings.SMTPHost, emailSettings.SMTPPort, emailSettings.EnabledSSL);
+                await client.AuthenticateAsync(emailSettings.FromEmailAddress, emailSettings.FromEmailPassword);
+                await client.SendAsync(emailMessage);
+                await client.DisconnectAsync(true);
+            }
         }
     }
 }

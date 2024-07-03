@@ -57,21 +57,25 @@
     }
     <div class="form-cart">
         <form asp-action="Payment" asp-controller="Cart" method="post">
-            <div class="form-group">
-                <div class="label-form-cart">Người nhận</div>
+            <div>
+                <label class="label-form-cart">Người nhận</label>
                 <input name="shipName" class="form-control" />
+                <span class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <div class="label-form-cart">Điện thoại</div>
+            <div>
+                <label class="label-form-cart">Điện thoại</label>
                 <input name="mobile" class="form-control" />
+                <span class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <div class="label-form-cart">Địa chỉ</div>
+            <div>
+                <label class="label-form-cart">Địa chỉ</label>
                 <input name="address" class="form-control" />
+                <span class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <div class="label-form-cart">Email</div>
+            <div>
+                <label class="label-form-cart">Email</label>
                 <input name="email" class="form-control" />
+                <span class="text-danger"></span>
             </div>
             <button type="submit" class="btn">Gửi đơn hàng</button>
         </form>

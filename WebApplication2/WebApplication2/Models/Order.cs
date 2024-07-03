@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication2.Models;
 
@@ -9,16 +10,28 @@ public partial class Order
 {
     public int Id { get; set; }
 
+    [Display(Name = "Ngày tạo")]
     public DateTime? CreatedDate { get; set; }
 
+    [Display(Name = "Id người tạo")]
     public int? CustomerId { get; set; }
 
+    [Required(ErrorMessage = "Hãy nhập tên của bạn")]
+    [StringLength(100, ErrorMessage = "Nhập không quá 100 ký tự")]
     public string ShipName { get; set; }
 
+    [Required(ErrorMessage = "Hãy nhập số điện thoại của bạn")]
+    [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
+    [StringLength(15, ErrorMessage = "Độ dài không quá 15 ký tự")]
     public string ShipMobile { get; set; }
 
+    [Required(ErrorMessage = "Hãy nhập địa chỉ")]
+    [StringLength(200, ErrorMessage = "Độ dài không quá 200 ký tự")]
     public string ShipAddress { get; set; }
 
+    [Required(ErrorMessage = "Hãy nhập địa chỉ Email")]
+    [EmailAddress(ErrorMessage = "Email không được để trống")]
+    [StringLength(100, ErrorMessage = "Độ dài không quá 100 ký tự")]
     public string ShipEmail { get; set; }
 
     public int? Status { get; set; }
