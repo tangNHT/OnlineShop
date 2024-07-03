@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebApplication2.Models
 {
@@ -16,6 +17,13 @@ namespace WebApplication2.Models
 		public List<Product> ListNewProduct(int top)
 		{
 			return (from p in  context.Products orderby p.CreatedDate descending select p).Take(top).ToList();
+		}
+		public List<Product> ListByCategoryId(int categoryId,ref int totalRecord, int pageIndex = 1, int pageSize = 4)
+		{
+			totalRecord = (from c in context.Products where c.CategoryId == categoryId select c).Count();
+			var model = (from c in context.Products where c.CategoryId == categoryId select c).OrderByDescending(x => x.CreatedDate)
+				.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+			return model;
 		}
 		public List<Product> ListFeatureProduct(int top)
 		{

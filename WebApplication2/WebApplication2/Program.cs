@@ -43,10 +43,25 @@ app.MapControllerRoute(
 	name: "Product Category",
 	pattern: "san-pham/{metatitle}-{cateId}",
 	defaults: new { controller = "Product", action = "ProductCategory" });
+
 app.MapControllerRoute(
 	name: "Product Detail",
 	pattern: "chi-tiet/{metatitle}-{id}",
 	defaults: new { controller = "Product", action = "Detail" });
+
+app.MapControllerRoute(
+	name: "Add Cart",
+	pattern: "them-gio-hang",
+	defaults: new { controller = "Cart", action = "AddItem" });
+
+app.MapControllerRoute(
+	name: "Cart",
+	pattern: "gio-hang",
+	defaults: new { controller = "Cart", action = "Index" });
+app.MapControllerRoute(
+	name: "Payment",
+	pattern: "thanh-toan",
+	defaults: new { controller = "Cart", action = "Payment" });
 
 app.MapControllerRoute(
 	name: "default",

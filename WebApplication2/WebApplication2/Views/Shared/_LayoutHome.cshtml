@@ -11,6 +11,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="/Home/css/style.css" rel="stylesheet" type="text/css" media="all" />
 	<link href="/Home/css/slider.css" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="/Admin/js/sb-admin-2.js"></script>
+	<script type="text/javascript" src="/Admin/js/controller/categoryController.js"></script>
 	<script type="text/javascript" src="/Home/js/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="/Home/js/move-top.js"></script>
 	<script type="text/javascript" src="/Home/js/easing.js"></script>
@@ -24,17 +26,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="header_top">
 				<div class="logo">
-					<a href="index.html"><img src="/Home/images/logo.png" alt="" /></a>
+					<a href="/"><img src="/Home/images/logo.png" alt="" /></a>
 				</div>
 				<div class="cart">
-					<p>
-						Welcome to our Online Store! <span>Cart:</span><div id="dd" class="wrapper-dropdown-2">
-							0 item(s) - $0.00
-							<ul class="dropdown">
-								<li>you have no items in your Shopping cart</li>
-							</ul>
-						</div>
-					</p>
+					@await Component.InvokeAsync("HeaderCart")
 				</div>
 				<script type="text/javascript">
 					function DropDown(el) {
@@ -91,6 +86,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		});
 	</script>
 	<a href="#" id="toTop"><span id="toTopHover"> </span></a>
+	@RenderSection("jsFooter", required:false)
 </body>
 </html>
 
