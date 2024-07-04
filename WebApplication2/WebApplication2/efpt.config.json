@@ -23,6 +23,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Contact]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Footer]",
          "ObjectType": 0
       },
@@ -52,6 +56,10 @@
       },
       {
          "Name": "[dbo].[Silde]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[User]",
          "ObjectType": 0
       }
    ],

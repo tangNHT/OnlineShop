@@ -5,6 +5,8 @@ using WebApplication2.Common;
 using Microsoft.Extensions.Options;
 using MailKit.Net.Smtp;
 using MimeKit;
+using MailKit.Security;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 namespace WebApplication2.Controllers
 {
 	public class CartController : Controller
@@ -220,11 +222,11 @@ namespace WebApplication2.Controllers
                 // Bỏ qua kiểm tra chứng chỉ
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                await client.ConnectAsync(emailSettings.SMTPHost, emailSettings.SMTPPort, emailSettings.EnabledSSL);
+                await client.ConnectAsync(emailSettings.SMTPHost, emailSettings.SMTPPort, MailKit.Security.SecureSocketOptions.StartTls);
                 await client.AuthenticateAsync(emailSettings.FromEmailAddress, emailSettings.FromEmailPassword);
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }
-        }
+		}
     }
 }

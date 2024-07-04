@@ -1,0 +1,22 @@
+From: =?utf-8?b?xJDGoW4gaMOgbmcgbeG7m2k=?= <tangnht040101@gmail.com>
+Date: Thu, 04 Jul 2024 11:36:53 +0700
+Subject: =?utf-8?b?xJDGoW4gaMOgbmcgbeG7m2kgdOG7qw==?= OnlineShop
+Message-Id: <VX4E8ITFHNU4.7XMCKDTBB8P71@desktop-af7b9h9>
+To: ythanhlong123@gmail.com
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Thông tin đơn hàng mới từ khách hàng: {{CustomerName}}</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    Thông tin đơn hàng mới từ khách hàng: {{CustomerName}}
+    Điện thoại: {{Phone}} <br />
+    Email: {{Email}}<br />
+    Địa chỉ: {{Address}}<br />
+    Trị giá: {{Total}}<br />
+</body>
+</html>

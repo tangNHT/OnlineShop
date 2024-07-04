@@ -1,0 +1,21 @@
+﻿@model WebApplication2.Models.Contact
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <h2>Thông tin liên hệ</h2>
+                @Html.Raw(Model.Content)
+            </div>
+            <div class="col-md-6">
+                <h2>Bản đồ</h2>
+                <div class="map" id="mapCanvas"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
