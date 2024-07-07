@@ -11,6 +11,8 @@ builder.Services.AddDbContext<OnlineShopDbContext>(options => options.UseSqlServ
 // Đăng ký cấu hình EmailSettings từ appsettings.jso
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
+builder.Services.AddResponseCaching(); // Thêm dịch vụ caching
+
 //Cấu hình dịch vụ session
 builder.Services.AddDistributedMemoryCache();
 
@@ -50,6 +52,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseSession();
+
+app.UseResponseCaching(); // Bật middleware caching
 
 app.UseAuthorization();
 
