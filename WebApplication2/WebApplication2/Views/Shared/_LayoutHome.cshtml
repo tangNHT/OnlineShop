@@ -65,8 +65,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="header_bottom">
 				@await Component.InvokeAsync("MainMenu")
 				<div class="search_box">
-					<form>
-						<input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
+					<form action="/tim-kiem" method="get">
+						<input type="text" name="keyword" id="txtKeyword" placeholder="Search"><input type="submit" value="">
 					</form>
 				</div>	
 				<div class="clear"></div>
@@ -87,6 +87,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		});
 	</script>
 	<a href="#" id="toTop"><span id="toTopHover"> </span></a>
+    <script src="~/client/js/controller/basecontroller.js"></script>
 	@RenderSection("jsFooter", required:false)
 </body>
 </html>

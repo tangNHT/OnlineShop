@@ -93,6 +93,11 @@ app.MapControllerRoute(
 	defaults: new { controller = "User", action = "Register" });
 
 app.MapControllerRoute(
+    name: "Search",
+    pattern: "tim-kiem",
+    defaults: new { controller = "Search", action = "Product" });
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
