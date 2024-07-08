@@ -4,7 +4,8 @@ namespace WebApplication2.Models.Component
 {
 	public class FooterViewComponent : ViewComponent
 	{
-		public IViewComponentResult Invoke()
+        [ResponseCache(Duration = 3600*24, Location = ResponseCacheLocation.Any, NoStore = false)]
+        public IViewComponentResult Invoke()
 		{
 			var model = new FooterModel().GetFooter();
 			return View(model); 

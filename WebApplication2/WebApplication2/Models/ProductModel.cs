@@ -38,5 +38,18 @@ namespace WebApplication2.Models
 		{
 			return context.Products.Find(id);
 		}
-	}
+
+		public IList<string> ListName(string keyword)
+		{
+			return context.Products.Where(x =>x.Name.Contains(keyword)).Select(x => x.Name).ToList();
+		}
+
+        public List<Product> Search(string keyword, ref int totalRecord, int pageIndex = 1, int pageSize = 4)
+        {
+            totalRecord = (from c in context.Products where c.Name.Contains(keyword) select c).Count();
+            var model = (from c in context.Products where c.Name.Contains(keyword) select c).OrderByDescending(x => x.CreatedDate)
+                .Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            return model;
+        }
+    }
 }

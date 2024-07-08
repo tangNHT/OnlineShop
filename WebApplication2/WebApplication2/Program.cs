@@ -11,6 +11,8 @@ builder.Services.AddDbContext<OnlineShopDbContext>(options => options.UseSqlServ
 // Đăng ký cấu hình EmailSettings từ appsettings.jso
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
+builder.Services.AddResponseCaching(); // Thêm dịch vụ caching
+
 //Cấu hình dịch vụ session
 builder.Services.AddDistributedMemoryCache();
 
@@ -51,6 +53,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 
+app.UseResponseCaching(); // Bật middleware caching
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -87,6 +91,11 @@ app.MapControllerRoute(
 	name: "Register",
 	pattern: "dang-ky",
 	defaults: new { controller = "User", action = "Register" });
+
+app.MapControllerRoute(
+    name: "Search",
+    pattern: "tim-kiem",
+    defaults: new { controller = "Search", action = "Product" });
 
 app.MapControllerRoute(
     name: "Login",
