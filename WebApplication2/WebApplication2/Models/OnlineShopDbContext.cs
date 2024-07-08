@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using WebApplication2.Models;
 
 namespace WebApplication2.Models;
 
@@ -242,4 +243,6 @@ public partial class OnlineShopDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+public DbSet<WebApplication2.Models.UserLoginModel> UserLoginModel { get; set; } = default!;
 }

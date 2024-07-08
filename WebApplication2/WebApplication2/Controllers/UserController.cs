@@ -11,6 +11,47 @@ namespace WebApplication2.Controllers
 			return View();
 		}
 
+		public IActionResult Login()
+		{
+			return View();
+		}
+		[HttpPost]
+		public IActionResult Login(UserLoginModel model)
+		{
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = new UserModel().Login(model.UserName, model.Password);
+                    if (result)
+                    {
+                        TempData["SuccessMessage"] = "Đăng nhập thành công";
+                        HttpContext.Session.SetString(CommonConstants.USER_SESSION, model.UserName);
+                        TempData["RedirectUrl"] = Url.Action("Index", "Home");
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Tài khoản hoặc mật khẩu không chính xác";
+                        ModelState.AddModelError("LoginError", "Tài khoản hoặc mật khẩu không chính xác");
+                    }
+                }
+                return View(model);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+		public ActionResult Logout()
+		{
+			//Xoá toàn bộ session
+			HttpContext.Session.Clear();
+
+			//Chuyển hướng về trang đăng nhập
+			return Redirect("/");
+		}
+
 		public IActionResult Register()
 		{
 			return View();

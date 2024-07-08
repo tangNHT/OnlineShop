@@ -65,6 +65,31 @@ namespace WebApplication2.Models
             return false;
         }
 
+        public bool Login(string userName, string password)
+        {
+            try
+            {
+                //Mã hoá mật khẩu nếu cần thiết (Ví dụ: băm mật khẩu)
+                string hashedPassword = HashPassword(password);
+
+                //Truy vấn cơ sở dữ liệu để tìm tài khoản có tên người dùng và mật khẩu đã mã hoá
+                var account = context.Users.FirstOrDefault(a => a.UserName == userName && a.Password == hashedPassword);
+
+                // Trả về true nếu tài khoản tồn tại, ngược lại trả về false
+                return account != null;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return false;
+        }
+
+        public string GetName(string userName)
+        {
+            return (from c in context.Users where c.UserName == userName select c.Name).FirstOrDefault();
+        }
+
         private string HashPassword(string password)
         {
             //Sử dụng phương thức băm mật khẩu phù hợp với ứng dụng của bạn
