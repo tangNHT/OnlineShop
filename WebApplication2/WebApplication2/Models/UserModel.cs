@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using WebApplication2.Common;
 
 namespace WebApplication2.Models
 {
@@ -65,7 +66,7 @@ namespace WebApplication2.Models
             return false;
         }
 
-        public bool Login(string userName, string password)
+        public bool Login(string userName, string password, bool isLoginAdmin)
         {
             try
             {
@@ -75,8 +76,13 @@ namespace WebApplication2.Models
                 //Truy vấn cơ sở dữ liệu để tìm tài khoản có tên người dùng và mật khẩu đã mã hoá
                 var account = context.Users.FirstOrDefault(a => a.UserName == userName && a.Password == hashedPassword);
 
-                // Trả về true nếu tài khoản tồn tại, ngược lại trả về false
-                return account != null;
+				if (isLoginAdmin && (account.GroupId == CommonConstants.ADMIN_GROUP || account.GroupId == CommonConstants.MOD_GROUP))
+				{
+					return true;
+				}
+
+				// Trả về true nếu tài khoản tồn tại, ngược lại trả về false
+				return false;
             }
             catch (Exception e)
             {

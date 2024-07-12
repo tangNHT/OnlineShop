@@ -27,6 +27,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Credential]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Footer]",
          "ObjectType": 0
       },
@@ -55,11 +59,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Role]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Silde]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[User]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserGroup]",
          "ObjectType": 0
       }
    ],

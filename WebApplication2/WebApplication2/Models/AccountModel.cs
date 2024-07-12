@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using WebApplication2.Common;
 
 namespace WebApplication2.Models
 {

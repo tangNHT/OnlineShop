@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using WebApplication2.Models;
 
 namespace WebApplication2.Models;
 
@@ -20,6 +19,8 @@ public partial class OnlineShopDbContext : DbContext
 
     public virtual DbSet<Contact> Contacts { get; set; }
 
+    public virtual DbSet<Credential> Credentials { get; set; }
+
     public virtual DbSet<Footer> Footers { get; set; }
 
     public virtual DbSet<Menu> Menus { get; set; }
@@ -34,9 +35,13 @@ public partial class OnlineShopDbContext : DbContext
 
     public virtual DbSet<ProductCategory> ProductCategories { get; set; }
 
+    public virtual DbSet<Role> Roles { get; set; }
+
     public virtual DbSet<Silde> Sildes { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<UserGroup> UserGroups { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -70,6 +75,22 @@ public partial class OnlineShopDbContext : DbContext
             entity.ToTable("Contact");
 
             entity.Property(e => e.Content).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Credential>(entity =>
+        {
+            entity.HasKey(e => new { e.UserGroupId, e.RoleId });
+
+            entity.ToTable("Credential");
+
+            entity.Property(e => e.UserGroupId)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("UserGroupID");
+            entity.Property(e => e.RoleId)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("RoleID");
         });
 
         modelBuilder.Entity<Footer>(entity =>
@@ -196,6 +217,17 @@ public partial class OnlineShopDbContext : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.ToTable("Role");
+
+            entity.Property(e => e.Id)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Silde>(entity =>
         {
             entity.ToTable("Silde");
@@ -225,6 +257,11 @@ public partial class OnlineShopDbContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(50);
+            entity.Property(e => e.GroupId)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasDefaultValue("MEMBER")
+                .HasColumnName("GroupID");
             entity.Property(e => e.ModifiedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -239,10 +276,19 @@ public partial class OnlineShopDbContext : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<UserGroup>(entity =>
+        {
+            entity.ToTable("UserGroup");
+
+            entity.Property(e => e.Id)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
         OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-public DbSet<WebApplication2.Models.UserLoginModel> UserLoginModel { get; set; } = default!;
 }

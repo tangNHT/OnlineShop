@@ -13,6 +13,8 @@ public partial class User
 
     public string Password { get; set; }
 
+    public string GroupId { get; set; }
+
     public string Name { get; set; }
 
     public string Address { get; set; }
